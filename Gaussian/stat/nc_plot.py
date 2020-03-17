@@ -20,7 +20,7 @@ plt.rc('font', family='serif')
 
 # Prepare Plot
 plt.figure(figsize=(10,6), dpi=300)
-plt.title(r"Title", fontsize=16)
+plt.title(r"Equi-Mahalanobis distance", fontsize=16)
 plt.xlabel(r'$x$', fontsize=14)
 plt.ylabel(r'$y$', fontsize=14)
 
@@ -33,9 +33,9 @@ x2 = var2['x'][:]
 y2 = var2['y'][:]
 
 # Plot with Legends
-plt.plot(x11, y11, label=r'$d=1$')
-plt.plot(x12, y12, label=r'$d=2$')
-plt.scatter(x2, y2, label='data')
+plt.plot(x11, y11, label=r'$\Delta=1$')
+plt.plot(x12, y12, label=r'$\Delta=2$')
+plt.scatter(x2, y2, label=r'$t$')
 
 # Other options
 plt.legend(fontsize=12)
