@@ -1,5 +1,5 @@
 [package]
-name = "HW1"
+name = "hw1"
 version = "0.1.0"
 authors = ["Axect <axect@outlook.kr>"]
 edition = "2018"

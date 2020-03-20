@@ -8,17 +8,19 @@ fn main() {
         *x += i as f64 + 1f64;
         *y += 5f64 - i as f64;
     }
-    println!("{:?}", a);
-    println!("{:?}", d);
+    println!("Input vec: {:?}", a);
+    println!("Input vec: {:?}", d);
 
     let b = &a[..];
     let c = &d[..];
 
-    println!("{}", b.mean());
-    println!("{}", b.var());
-    println!("{}", b.cov(&c));
+    println!("Mean: {}", b.mean());
+    println!("Var: {}", b.var());
+    println!("Cov: {}", b.cov(&c));
+    println!("");
 
     let m: Matrix = MATLAB::new("1 8; 2 6; 3 4; 4 2");
+    m.print();
     m.mean().print();
     m.var().print();
     m.cov_mat().print();
@@ -51,9 +53,8 @@ impl<'a> Statistics for &'a [f64] {
             s2 += elem;
         }
         let l_f64 = self.len() as f64;
-        s1 /= l_f64;
-        s2 /= l_f64;
-        s1 - s2.powi(2)
+        s1 /= l_f64 - 1f64;
+        s1 - s2.powi(2) / (l_f64 * (l_f64 - 1f64))
     }
 
     fn cov(&self, rhs: &Self) -> Self::Output {
@@ -66,9 +67,10 @@ impl<'a> Statistics for &'a [f64] {
             s_y += y;
         }
         let l_f64 = self.len() as f64;
-        s /= l_f64;
+        let l_f64_1 = l_f64 - 1f64;
+        s /= l_f64_1;
         s_x /= l_f64;
-        s_y /= l_f64;
+        s_y /= l_f64_1;
         s - s_x * s_y
     }
     
@@ -100,7 +102,7 @@ impl Statistics for Matrix {
         v
     }
 
-    fn cov(&self, rhs: &Self) -> Self::Output {
+    fn cov(&self, _rhs: &Self) -> Self::Output {
         unimplemented!()
     }
 
