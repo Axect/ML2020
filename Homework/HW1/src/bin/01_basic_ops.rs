@@ -21,8 +21,12 @@ fn main() {
 
     let m: Matrix = MATLAB::new("1 8; 2 6; 3 4; 4 2");
     m.print();
+    println!("");
+    print!("Mean: ");
     m.mean().print();
+    print!("Var: ");
     m.var().print();
+    println!("Cov: ");
     m.cov_mat().print();
 }
 
