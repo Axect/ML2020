@@ -36,7 +36,7 @@ fn gen_sample() -> DataFrame {
 }
 
 fn design_matrix(s: f64) -> Matrix {
-    Matrix::from_index(|i, j| phi(j, s, (i+1) as f64), (101, 100))
+    Matrix::from_index(|i, j| phi(j, s, (i+1) as f64), (100, 101))
 }
 
 fn phi(j: usize, s: f64, x: f64) -> f64 {
@@ -63,6 +63,5 @@ fn y(s: f64, w: &Matrix, x: f64) -> f64 {
 fn w_mle(s: f64, t: &Vec<f64>) -> Matrix {
     let phi_mat = design_matrix(s);
     phi_mat.print();
-    (&phi_mat.t() * &phi_mat).det().print();
-    (&phi_mat.t() * &phi_mat).pseudo_inv().unwrap() * t.to_matrix()
+    phi_mat.pseudo_inv().unwrap() * t.to_matrix()
 }
