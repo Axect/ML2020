@@ -1,0 +1,13 @@
+[package]
+name = "nd_gauss"
+version = "0.1.0"
+authors = ["Axect <axect@outlook.kr>"]
+edition = "2018"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+ndarray = { version = "0.13", features = ["blas"] }
+netcdf = "0.4"
+ndarray-linalg = { version = "0.12", features = ["openblas"] }
+ndarray-rand = "*"

@@ -143,9 +143,9 @@ checksum = "efa535d5117d3661134dbf1719b6f0ffe06f2375843b13935db186cd094105eb"
 
 [[package]]
 name = "peroxide"
-version = "0.21.4"
+version = "0.21.5"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "df474d214282b8ac7bb5fef7fd559b6b720a51fd7bafec7768d25eeaa985ff0c"
+checksum = "57703616312cf3199565cfa0302528673e19a61c765dfe4c9fff395b9f1573ca"
 dependencies = [
  "csv",
  "indexmap",

@@ -6,10 +6,10 @@ fn main() {
     sample.write_nc("data.nc").expect("Can't write data.nc");
     let x = &sample["x"];
     let t = &sample["y"];
-    
-    let s = 5f64;
+
+    let s = 1f64;
     let w = w_mle(s, t);
-    
+
     let x_draw = seq(1, 100, 0.1);
     let y_draw = x_draw.fmap(|x| y(s, &w, x));
 
@@ -62,6 +62,5 @@ fn y(s: f64, w: &Matrix, x: f64) -> f64 {
 
 fn w_mle(s: f64, t: &Vec<f64>) -> Matrix {
     let phi_mat = design_matrix(s);
-    phi_mat.print();
     phi_mat.pseudo_inv().unwrap() * t.to_matrix()
 }
