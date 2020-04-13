@@ -6,10 +6,12 @@ ncfile1 = './data/data.nc'
 data1 = Dataset(ncfile1)
 var1 = data1.variables
 
-#ncfile2 = './reg.nc'
-ncfile2 = './data/single/reg.nc'
-data2 = Dataset(ncfile2)
-var2 = data2.variables
+var_vec = []
+for i in range(1,11):
+    ncfile = './data/par/reg_lam_{}.nc'.format(i)
+    data = Dataset(ncfile)
+    var = data.variables
+    var_vec.append(var)
 
 # Use latex
 plt.rc('text', usetex=True)
@@ -25,14 +27,15 @@ plt.ylabel(r'$y$', fontsize=14)
 x1 = var1['x'][:]
 y1 = var1['y'][:]
 
-x2 = var2['x'][:]
-y2 = var2['y'][:]
-
 # Plot with Legends
 plt.scatter(x1, y1, label='data')
-plt.plot(x2, y2, label=r'$\lambda = 100000$', color='r')
+for i in range(1,11):
+    var = var_vec[i-1]
+    x = var['x']
+    y = var['y']
+    plt.plot(x, y, label=r'$\lambda = {}$'.format(i))
 
 # Other options
 plt.legend(fontsize=12)
 plt.grid()
-plt.savefig("plot_lam_10_5.png", dpi=300)
+plt.savefig("plot/plot_par_10.png", dpi=300)
