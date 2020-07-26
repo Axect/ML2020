@@ -32,7 +32,7 @@ Implement Least square for Linear discriminant as follows.
 
 Use Fisher's linear discriminant, repeat above.
 
-**Hint**: We know $\mathbf{w} \propto \mathbf{S_w}(\mathbf{m_2} - \mathbf{m_1})$. With normalization, we can find true $\mathbf{w}$.
+**Hint**: We know $\mathbf{w} \propto \mathbf{S_w^{-1}}(\mathbf{m_2} - \mathbf{m_1})$. With normalization, we can find true $\mathbf{w}$.
 
 **Helpful reference**
 
