@@ -1,5 +1,6 @@
+#[macro_use]
 extern crate peroxide;
-use peroxide::*;
+use peroxide::fuga::*;
 use std::f64::consts::PI;
 
 fn main() {
@@ -63,8 +64,9 @@ fn cov2(x: &Vec<f64>, y: &Vec<f64>) -> f64 {
 fn mahalanobis(x: &Vec<f64>, m: &Matrix) -> f64 {
     let mu = m.mean();
     let sigma = m.cov();
-    let x_mu = x.sub(&mu).to_matrix();
-    (&x_mu.t() * &sigma.inv().unwrap() * x_mu)[(0, 0)].sqrt()
+    let x_mu: Matrix = x.sub_v(&mu).into();
+    let v: Matrix = (&x_mu * &sigma.inv()) * x_mu;
+    v[(0, 0)].sqrt()
 }
 
 fn equi_mahal(m: &Matrix, d: f64) -> DataFrame {
@@ -86,8 +88,8 @@ fn equi_mahal(m: &Matrix, d: f64) -> DataFrame {
         em.swap(0, 1, Col);
     }
     let u = em.t();
-    let mut x = u.inv().unwrap() * y;
-    x.col_mut_map(|t| t.add(&mu));
+    let mut x = u.inv() * y;
+    x.col_mut_map(|t| t.add_v(&mu));
     let x = x.t();
     let mut df = DataFrame::with_header(vec!["x", "y"]);
     df["x"] = x.col(0);
