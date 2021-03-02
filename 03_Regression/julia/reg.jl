@@ -45,7 +45,7 @@ function ϕ(x::Vector{T}) where T <: Number
     ph
 end
 
-function s_n_inv(ph::T)::T where T <: AbstractMatrix
+function s_n_inv(ph::S) where {T <: Number, S <: AbstractMatrix{T}}
     2 * I + 25 * (ph' * ph)
 end
 
