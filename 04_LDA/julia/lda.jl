@@ -7,9 +7,9 @@ using LinearAlgebra, Distributions, Statistics
 
 ...
 ## Description
-- ``x: 300 \\times 3`` (Matrix)
-- ``t: 300 \\times 2`` (Matrix)
-- ``w:   3 \\times 2`` (Matrix)
+- x: 300 x 3 (Matrix)
+- t: 300 x 2 (Matrix)
+- w:   3 x 2 (Matrix)
 ...
 """
 function weight_ls(x::S, t::S) where {T <: Number, S <: AbstractMatrix{T}}
@@ -64,7 +64,7 @@ end
 """
 function boundary_1(w::S, x::V) where {T <: Number, S <: AbstractMatrix{T}, V <: AbstractVector{T}}
     z = V(undef, length(x))
-    @avx for i in eachindex(x)
+    @simd for i in eachindex(x)
         @inbounds z[i] = (x[i] * (-w[2,1]) - w[1,1] + 0.5) / w[3,1]
     end
     z
@@ -75,7 +75,7 @@ end
 """
 function boundary_2(w::S, x::V) where {T <: Number, S <: AbstractMatrix{T}, V <: AbstractVector{T}}
     z = V(undef, length(x))
-    @avx for i in eachindex(z)
+    @simd for i in eachindex(z)
         @inbounds z[i] = (x[i] * (-w[2,2]) - w[1,2] + 0.5) / w[3,2]
     end
     z
