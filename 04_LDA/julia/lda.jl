@@ -88,11 +88,19 @@ function weight_fisher(s_w::S, m1::V, m2::V) where {T <: Number, S <: AbstractMa
     inv(s_w) * (m2 - m1)
 end
 
+# """
+#     Boundary of Fisher's LDA
+# """
+# function boundary_fisher(w::V, x::V, m::V) where {T <: Number, V <: AbstractVector{T}}
+#     (x .- m[1]) * (-w[1] / w[2]) .+ m[2]
+# end
+
 """
     Boundary of Fisher's LDA
 """
-function boundary_fisher(w::V, x::V, m::V) where {T <: Number, V <: AbstractVector{T}}
-    (x .- m[1]) * (-w[1] / w[2]) .+ m[2]
+function boundary_fisher(w::V, dom::V, m1::T, m2::T, s1::T, s2::T) where {T <: Number, V <: AbstractVector{T}}
+    c_m = (s2 * m1 + s1 * m2) / (s1 + s2)
+    dom * (-w[1] / w[2]) .+ c_m
 end
 
 """
@@ -112,8 +120,8 @@ function main()
     # Generate 2D Data
     n1 = Normal(3, 1)
     n2 = Normal(1, 3)
-    n3 = Normal(-3, 1)
-    n4 = Normal(-1, 3)
+    n3 = Normal(-5, 2)
+    n4 = Normal(-2, 1.5)
 
     x1 = rand(n1, 150)
     y1 = rand(n2, 150)
@@ -151,8 +159,8 @@ function main()
     m1 = vec(mean(g1, dims=1))
     m2 = vec(mean(g2, dims=1))
     
-    @fastmath m = (m1 .+ m2) ./ 0.5;
-    @show m
+    # @fastmath m = (m1 .+ m2) ./ 0.5;
+    # @show m
 
     s = cov(g1) .+ cov(g2)
     @show s
@@ -165,9 +173,15 @@ function main()
 
     w_g1 = g1 * w_fisher
     w_g2 = g2 * w_fisher
-    w_0 = dot(m, w_fisher)
+    # w_0 = dot(m, w_fisher)
 
     max_l = length(domain)
+
+    m1_proj = dot(w_fisher, m1)
+    m2_proj = dot(w_fisher, m2)
+
+    s1 = std(w_g1)
+    s2 = std(w_g2)
 
     df = DataFrame(
         x1=fillmissing(x1, max_l),
@@ -177,7 +191,7 @@ function main()
         d=fillmissing(domain, max_l),
         b1=fillmissing(b1, max_l),
         b2=fillmissing(b2, max_l),
-        bf=fillmissing(boundary_fisher(w_fisher,domain,m), max_l),
+        bf=fillmissing(boundary_fisher(w_fisher,domain,m1_proj, m2_proj, s1, s2), max_l),
         r1=fillmissing(w_g1, max_l),
         r2=fillmissing(w_g2, max_l),
     )

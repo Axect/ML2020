@@ -29,8 +29,8 @@ r1 = var['r1'][:]
 r2 = var['r2'][:]
 
 # Plot with Legends
-plt.scatter(x1, y1, label=r'Group1', c=r1, alpha=1, vmin=-5, vmax=5)
-plt.scatter(x2, y2, label=r'Group2', c=r2, alpha=1, vmin=-5, vmax=5)
+plt.scatter(x1, y1, label=r'Group1', c='olive', alpha=1, vmin=-5, vmax=5)
+plt.scatter(x2, y2, label=r'Group2', c='brown', alpha=1, vmin=-5, vmax=5)
 plt.plot(d, b1, label=r'$LS_1$', color='r', alpha=0.5)
 plt.plot(d, b2, label=r'$LS_2$', color='b', alpha=0.5)
 plt.plot(d, bf, label=r'Fisher', color='g', alpha=0.9)
